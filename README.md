@@ -41,4 +41,4 @@
 
 ### Journal Entry
 
-### Contributers: Jeffery Jeffries, Tanner Percival
+### Contributers: Brady Camp
