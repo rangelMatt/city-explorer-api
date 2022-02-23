@@ -30,7 +30,7 @@ app.get('/weather', (request, response) => {
   let searchQuery = request.query.searchQuery;
 
   let forecastObj = data.find(weather => weather.city_name.toLowerCase() === searchQuery.toLowerCase());
-  console.log('This', forecastObj.data);
+  // console.log('This', forecastObj.data);
   const weatherArr = forecastObj.data.map(day => new Forecast(day));
 
   response.send(weatherArr);

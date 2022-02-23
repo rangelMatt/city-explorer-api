@@ -1,16 +1,19 @@
 # city-explorer-api
 
-**Author**: Your Name Goes Here
+**Author**: Matt Rangel
 **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
-<!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
+
+Created a server to access static weather.
 
 ## Getting Started
-<!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
+
+create class and get to get the weather and render to the site.
 
 ## Architecture
-<!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
+
+javascript, node, axios, express
 
 ## Change Log
 <!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an example:
@@ -35,10 +38,12 @@
 
 3. **Feature #3: Error**
    - Estimate of time needed to complete: 1 hour
-   - Start time:
-   - Finish time:
-   - Actual time:
+   - Start time: 3:00pm
+   - Finish time: 3:30pm
+   - Actual time: 30min
 
 ### Journal Entry
 
-### Contributers: Brady Camp
+[![API RESPONSE CYCLE](https://miro.com/app/board/uXjVOK2U1ho=/)]
+
+### Contributers: Brady Camp, Tanner Percival, Brian Thornburg, Andres Mills Gallego
