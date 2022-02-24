@@ -1,75 +1,56 @@
 'use strict';
 
+// once we have express, we must USE express
 const express = require('express');
-const cors = require('cors');
-
+const app = express();
 require('dotenv').config();
 const PORT = process.env.PORT || 3002;
+const cors = require('cors');
 
-const app = express();
+// - middleware - allows us to USE cors
 app.use(cors());
 
 const data = require('./data/weather.json');
 
+app.get('/', (request, response) => {
+  response.send('Hello, this is Server.');
+});
 
-
-// console.log('Hello World, from our FIRST server!');
-
-
-// in our servers, we MUST use require instead of import
-// to create server, bring in Express. as per docs
-
-
-// once we have express, we must USE express
-
-// cors does request to the backend to the front end
-
-// bring in dotenv if we are going to use a .env
 
 app.get('/weather', (request, response) => {
-  let searchQuery = request.query.searchQuery;
+  let searchQuery = request.query;
+  console.log('data',data);
+  console.log('search query',searchQuery);
+  let cityObj = data.find(weather => weather.city_name.toLowerCase() === searchQuery.cityName.toLowerCase());
+  try {
 
-  let forecastObj = data.find(weather => weather.city_name.toLowerCase() === searchQuery.toLowerCase());
-  // console.log('This', forecastObj.data);
-  const weatherArr = forecastObj.data.map(day => new Forecast(day));
 
-  response.send(weatherArr);
+    const weatherArr = cityObj.data.map(day => new Forecast(day));
+
+    response.send(weatherArr);
+  } catch (error) {
+    throw new Error('Weather not here.');
+  }
 });
+
+
 
 app.get('*', (request, response) => {
-  response.send(`WARNING: ERROR`);
+  response.status(404).send('Not Available');
 });
 
-class Forecast {
-  constructor(day) {
-    this.date = day.datetime;
-    this.description = day.weather.description;
-  }
+
+function Forecast(day) {
+  // constructor(day) {
+  this.description = `Low of ${day.low_temp}, high of ${day.high_temp} with ${day.weather.description.toLowerCase()}`;
+  this.date = `${day.datetime}`;
+  // }
 }
 
-
-// creating basic default route
-app.get('/', (request, response) => {
-  response.send('Hello, from our server!');
+app.use((error, request, response, next) => {
+  console.log(error.message);
+  response.status(500).send(error.message);
 });
-
-app.get('/banana', (request, response) => {
-  response.send('mmmmm bananas');
-});
-
-app.get('/sayHello', (request, response) => {
-  console.log(request.query);
-  let firstName = request.query.firstName;
-  let lastName = request.query.lastName;
-
-  response.send(`Hello ${firstName} ${lastName}`);
-});
-
-
-
 
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
-
-
-
