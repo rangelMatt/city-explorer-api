@@ -7,34 +7,28 @@ const axios = require('axios');
 // const data = require('./data/weather.json');
 
 async function getWeather(request, response) {
+
+  let lat = request.query.lat;
+  let lon = request.query.lon;
+
+  let url = `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHER_API_KEY}&units=I&days=3&lat=${lat}&lon=${lon}&`;
   try {
-    let lat = request.query.lat;
-    let lon = request.query.lon;
+    let weatherData = await axios.get(url);
 
-    let url = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&days=3&key=${process.env.WEATHER_API_KEY}`;
-
-    let citObj = await axios.get(url);
-
-    const weatherArr = citObj.data.data.map(day => new Forecast(day));
+    const weatherArr = weatherData.data.data.map(day => new Forecast(day));
     // const weatherArr = cityObj.data.map(day => new Forecast(day));
     response.send(weatherArr);
   } catch (error) {
-    // errorResponse(error, request, response);
+    response.status(500).send(error.message);
+  }
+}
+class Forecast {
+  constructor(weatherData) {
+    this.description = `Low of ${weatherData.low_temp}, high of ${weatherData.high_temp} with ${weatherData.weather.description.toLowerCase()}`;
+    this.date = `${weatherData.datetime}`;
   }
 }
 
-// let searchQuery = request.query.searchQuery;
-// let cityObj = data.find(weather => weather.city_name.toLowerCase() === searchQuery.toLowerCase());
-
-
-
-
-
-function Forecast(day) {
-  // constructor(day) {
-  this.description = `Low of ${day.low_temp}, high of ${day.high_temp} with ${day.weather.description.toLowerCase()}`;
-  this.date = `${day.datetime}`;
-  // }
-}
-
 module.exports = getWeather;
+
+
