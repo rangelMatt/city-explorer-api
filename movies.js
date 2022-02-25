@@ -9,8 +9,17 @@ async function getMovie(request, response) {
   try {
     let movieData = await axios.get(movieUrl);
 
-    const movieArr = movieData.data.data.map(day => new Forecast(day));
+    const movieArr = movieData.data.total_pages.map(movie => new Blockbuster(movie));
+    response.send(movieArr);
+  } catch (error) {
+    response.status(500).send(error.message);
   }
 }
 
-module.exports = getMovies;
+class Blockbuster {
+  constructor(movieData) {
+    this.movies = movieData.slice(0, 20);
+  }
+}
+
+module.exports = getMovie;
