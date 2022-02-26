@@ -2,14 +2,13 @@
 
 const axios = require('axios');
 
-async function getMovie(request, response) {
-
-  let movieUrl = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.Movie_API_KEY}&query=$seattle`;
+async function getMovies(request, response) {
+  let movieUrl = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&query=${request.query.location}`;
 
   try {
     let movieData = await axios.get(movieUrl);
 
-    const movieArr = movieData.data.total_pages.map(movie => new Blockbuster(movie));
+    const movieArr = movieData.data.results.map(movie => new Blockbuster(movie));
     response.send(movieArr);
   } catch (error) {
     response.status(500).send(error.message);
@@ -17,9 +16,9 @@ async function getMovie(request, response) {
 }
 
 class Blockbuster {
-  constructor(movieData) {
-    this.movies = movieData.slice(0, 20);
+  constructor(movie) {
+    this.movie = movie.title;
   }
 }
 
-module.exports = getMovie;
+module.exports = getMovies;
