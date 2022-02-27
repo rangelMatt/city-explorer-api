@@ -26,9 +26,10 @@ javascript, node, axios, express
 
 1. **Feature #1: Performance**
    - Estimate of time needed to complete: 3 hour
-   - Start time:
-   - Finish time:
-   - Actual time:
+   - Start time: 9:30am
+   Breaks between with lunch and working on code challenges
+   - Finish time: 4:00pm
+   - Actual time: 3.5 hours
 
 ### WRRC 5
 

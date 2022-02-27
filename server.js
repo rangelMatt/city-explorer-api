@@ -8,21 +8,30 @@ const app = express();
 require('dotenv').config();
 const PORT = process.env.PORT || 3002;
 
-const getWeather = require('./weather');
-const getMovies = require('./movies');
-//./movies
+const weather = require('./modules/weather');
+const getMovies = require('./modules/movies');
 
-// - middleware - allows us to USE cors
+// app.get('/', (request, response) => {
+//   response.send('Hello, this is Server.');
+// });
+
 app.use(cors());
 
-
-app.get('/', (request, response) => {
-  response.send('Hello, this is Server.');
-});
-
-
-app.get('/weather', getWeather);
+app.get('/weather', weatherHandler);
 app.get('/movies', getMovies);
 
+async function weatherHandler(request, response) {
+  const lat = request.query.lat;
+  const lon = request.query.lon;
+  console.log('look', lat, lon);
+  weather(lat, lon)
+    .then(summaries => response.send(summaries))
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+    .catch((error) => {
+      console.error(error);
+      response.status(200).send('Sorry. Something went wrong!');
+
+    });
+}
+
+app.listen(PORT, () => console.log(`Server up on ${PORT}`));
