@@ -2,10 +2,6 @@
 
 const axios = require('axios');
 
-// const errorResponse = require('./error.js');
-
-// const data = require('./data/weather.json');
-
 async function getWeather(request, response) {
 
   let lat = request.query.lat;
@@ -16,7 +12,7 @@ async function getWeather(request, response) {
     let weatherData = await axios.get(url);
 
     const weatherArr = weatherData.data.data.map(day => new Forecast(day));
-    // const weatherArr = cityObj.data.map(day => new Forecast(day));
+
     response.send(weatherArr);
   } catch (error) {
     response.status(500).send(error.message);
