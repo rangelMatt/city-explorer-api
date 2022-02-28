@@ -17,6 +17,7 @@ async function getMovies(req, res) {
 
       let movieData = await axios.get(movieUrl);
 
+      // you can consoleLog movieData.data, data is an axios key. This will enable you to see the day within the api and allow you to see how to access the property within the movie data.
       const movieArr = movieData.data.results.map(movie => new Blockbuster(movie));
       cache[key] = {};
       cache[key].timestamp = Date.now();
